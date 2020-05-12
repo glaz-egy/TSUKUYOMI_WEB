@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="images/favicon.ico">
+    <title>月詠 -TSUKUYOMI-</title>
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/encoding-japanese/1.0.30/encoding.min.js"></script>
+<script src="js/setting.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo center"><img height="64px" src="images/path79.png"></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/readme.html" class="nava">このサイトの利用方法</a></li>
+                </ul>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/update.html" class="nava">サイト更新情報</a></li>
+                </ul>
+                <ul id="slide-out" class="sidenav right">
+                    <li class="active"><a href="/">トップページ</a></li>
+                    <li><a href="/admin">管理者ページ</a></li>
+                    <li><a href="/about.html">このサイトについて</a></li>
+                    <li><a id="theme">ダークテーマにする(IE非対応)</a></li>
+                </ul>
+                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i
+                        class="material-icons">menu</i></a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <br/>
+        <div class="card">
+            <div class="card-content">
+                <p>管理者、ユーザに限らずサイト左上にある三本線のマークをクリックすることでページを移動できます。<br/>
+                    サイドメニューの一番下の項目ではカラーテーマを設定する事が出来ます(Internet Explorerには非対応。Microsoft Edge, Google Chrome, Mozilla Firefox, Vivaldiにて動作確認済み)。<br/>
+                カラーテーマの設定はブラウザを閉じても保持されます。</p>
+            </div>
+            <div class="card-tabs">
+                <ul class="tabs tabs-fixed-width">
+                    <li class="tab"><a class="active" style="color: #26a69a" href="#adnim">管理者向け</a></li>
+                    <li class="tab"><a href="#user" style="color: #26a69a">ユーザ向け</a></li>
+                </ul>
+            </div>
+            <div class="card-content">
+                <div id="adnim">
+                    <div class="section">
+                        <h4 style="font-weight: bold;">管理者向け</h4>
+                        <div class="divider"></div>
+                        <div class="section">
+                            <h5 style="font-weight: bold;">概要</h4>
+                                <div class="divider"></div>
+                                <p>
+                                    管理者はユーザから送信された情報を整理した状態で閲覧、保存する事が出来ます。<br />
+                                    ソート、受信する項目の選択、受信したデータの保存を一ページ内で行えます。
+                                </p>
+                        </div>
+                        <div class="section">
+                            <h5 style="font-weight: bold;">ソートについて</h4>
+                                <div class="divider"></div>
+                                <p>
+                                    ソートは時間、社員番号と昇順、降順の組み合わせで行えます。ソート内容を設定したあと、ソートボタンを押すことでソートされます。<br />
+                                    ソート内容の設定は「ソート順」と書かれたプルダウンメニューで可能です。
+                                    また、ソートした結果は保存するデータにも引き継がれます。
+                                </p>
+                        </div>
+                        <div class="section">
+                            <h5 style="font-weight: bold;">社員番号重複許可と受付種別について</h4>
+                                <div class="divider"></div>
+                                <p>
+                                    社員番号重複許可の設定項目では社員番号重複を設定します。それぞれを設定した場合の動作は以下の表の通りです。
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>設定</th>
+                                                <th>内容</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>社員番号の重複を許可しない</td>
+                                                <td>同じ社員番号が送信されてきた場合、先に送られてきた方を優先し、以降送られてきたものについては破棄します。<br/>
+                                                    デフォルトの設定値です。
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>異なる種別の場合に社員番号の重複を許可する</td>
+                                                <td>
+                                                    同じ社員番号でも種別が異なっていた場合、それぞれ最初のものは受信します。<br/>
+                                                    種別、社員番号がすでに存在している場合は上記同様、破棄します。
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>社員番号の重複を許可する</td>
+                                                <td>
+                                                    種別、社員番号が重複していた場合でも一切破棄せず、全て受信します。
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    次に受付種別では受信をする種別について設定できます。<br/>
+                                    チェックを入れている種別については受信を行い、入れていないものは破棄します。<br/>
+                                    これらの設定はブラウザを閉じる、または再読込みをおこなっても保持されます。
+                                </p>
+                        </div>
+                        <div class="section">
+                            <h5 style="font-weight: bold;">各種ボタンについて</h4>
+                                <div class="divider"></div>
+                                <p>
+                                    リセットボタンは表示をリセットします。<br/>
+                                    ソートボタンはソートを行います。<br/>
+                                    取得ボタンは受信したデータをファイルに保存します。※IEは右クリックで保存<br/>
+                                    保存形式は以下の例の通りです。<br/>
+                                    <code>
+                                        [2020/04/13 01:01:36]xxxx, yyyy, 出勤<br/>
+                                        [2020/04/13 01:01:40]zzzz, aaaa, 出勤<br/>
+                                        [2020/04/13 01:01:45]bbbb, cccc, 退勤<br/>
+                                        [2020/04/13 01:04:16]bbbb, cccc, 100, テスト<br/>
+                                    </code>
+                                </p>
+                        </div>
+                    </div>
+                </div>
+                <div id="user">
+                    <div class="section">
+                        <h4 style="font-weight: bold;">ユーザ向け</h4>
+                        <div class="divider"></div>
+                        <div class="section">
+                            <h5 style="font-weight: bold;">概要</h5>
+                            <div class="divider"></div>
+                            <p>ユーザは出勤、退勤、その他のボタンを押すことで管理者に情報を送信できます。<br />
+                                また、クエリパラメータにname, number, typeを含めることによって手間無く利用可能です。
+                            </p>
+                        </div>
+                        <div class="section">
+                            <h5 style="font-weight: bold;">クエリパラメータについて</h5>
+                            <div class="divider"></div>
+                            <p>クエリパラメータのnameには氏名、numberには社員番号をそれぞれ入力します。
+                                typeは下記表の項目を入力します。
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>項目名</th>
+                                        <th>内容</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>join</td>
+                                        <td>出勤の情報をサーバ接続時、または管理者がログインしたら送信します。<br />
+                                            正常に送信が行えた場合、ボタンの上部に「GETパラメータにより出勤しました」が表示されます。
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>leave</td>
+                                        <td>退勤の情報をサーバ接続時、または管理者がログインしたら送信します。<br />
+                                            正常に送信が行えた場合、ボタンの上部に「GETパラメータにより退勤しました」が表示されます。
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>other</td>
+                                        <td>氏名、社員番号にあらかじめ入力された状態になります。</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            以上より、出勤を即時に行うためのクエリパラメータを含んだURLは次のようになります。<br />
+                            <code>
+                                    http://www.tsukuyomi.work/?name=xxxx&number=yyyy&type=join //xxxx, yyyyはそれぞれ氏名, 社員番号
+                                </code>
+                            </p>
+                        </div>
+                        <div class="section">
+                            <h5 style="font-weight: bold;">それぞれのボタンについて</h5>
+                            <div class="divider"></div>
+                            <p>
+                                ボタンはクエリパラメータを用いない場合の他、その他やテストの点数を送る際に使用します。<br />
+                                出勤、退勤を送信する場合には氏名、社員番号の入力が必須です。<br />
+                                その他ボタンは出勤、退勤以外で一時的に退出、または離席した場合に送信する際に使用します。<br />
+                                点数を入力してその他ボタンを押すことで、テストの点数を送信する事が出来ます。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="page-footer">
+        <div class="container center"></div>
+        <div class="footer-copyright" style="background-color: rgb(53, 53, 53);">
+            <div class="container center">© 2020-2020 Glaz-egy, All right reserved.</div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Materializeの使い方</title>
+
+		<!-- Import prettify files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/encoding-japanese/1.0.30/encoding.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Import my css -->
+    <link rel="stylesheet" type="text/css" href="src/myStyleSheet.css">
+
+  </head>
+
+  <body>
+
+    <!-- ナビゲーションバーの設置 -->
+    <div  class="navbar-fixed">
+
+      <!-- Dropdown Structure -->
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a href="index.html#field">フィールド</a></li>
+        <li><a href="index.html#selectbox">セレクトボックス</a></li>
+        <li><a href="index.html#radiobutton">ラジオボタン</a></li>
+        <li><a href="index.html#checkbox">チェックボックス</a></li>
+        <li><a href="index.html#range">レンジ</a></li>
+        <li><a href="index.html#date">日付</a></li>
+        <li><a href="index.html#switch">スイッチ</a></li>
+        <li><a href="index.html#file-input">ファイル</a></li>
+      </ul>
+
+      <nav>
+        <div class="nav-wrapper yellow darken-3">
+          <a href="#" class="brand-logo right">Materializeの使い方</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+          <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li class="waves-effect waves-light"><a href="index.html#introduction">はじめに</a></li>
+            <li class="waves-effect waves-light"><a href="index.html#card">カード</a></li>
+            <li class="waves-effect waves-light"><a href="index.html#icon">アイコン</a></li>
+            <li class="waves-effect waves-light"><a href="index.html#button">ボタン</a></li>
+            <li><a class="waves-effect waves-light　dropdown-button" data-activates="dropdown1">入力フォーム<i class="material-icons right">arrow_drop_down</i></a></li>
+          </ul>
+
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="index.html#introduction">はじめに</a></li>
+            <li><a href="index.html#card">カード</a></li>
+            <li><a href="index.html#icon">アイコン</a></li>
+            <li><a href="index.html#button">ボタン</a></li>
+            <li><a href="index.html#input-form">入力フォーム</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+
+    <!-- materializeの導入について -->
+    <div class="row">
+      <div class="col s12 m10 offset-m1  l8 offset-l2">
+
+        <h3 id="introduction">はじめに</h3>
+        <ul class="collapsible popout" data-collapsible="accordion">
+
+          <li>
+            <div class="collapsible-header active"><i class="material-icons">chat_bubble_outline</i>このドキュメントの役割</div>
+            <div class="collapsible-body">
+              <p>
+                このドキュメントはデザインフレームワーク<a href="http://materializecss.com/">Materialize</a>の勉強ついでにまとめたものです。</br>
+                レスポンシブかつマテリアルなデザインを簡単に作ることができます。</br>
+                </br>
+                とにかくMaterializeの使い方を早く知りたいよ！！という方向けに、ソースを明示しながら紹介していきます。</br>
+                </br>
+                このページのソースは<a href="https://github.com/masayuki610930/materialize_sample/tree/gh-pages">Githubに公開</a>してます。
+            </p>
+            </div>
+          </li>
+
+          <li>
+            <div class="collapsible-header"><i class="material-icons">system_update_alt</i>ダウンロード</div>
+            <div class="collapsible-body">
+              <div class="row">
+                <div>
+                  <p>
+                    <a href="http://materializecss.com/getting-started.html">公式サイト</a>からGETしましょう！</br>
+                    </br>
+                    Sassとかとりあえずいいので、左側のボタンから.zipをダウンロードしましょう。
+                  </p>
+                </div>
+                <div class="col s10 offset-s1 m8 offset-m2">
+                  <a href="http://materializecss.com/getting-started.html"><img class="responsive-img" src="src/img/download.png"></a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="collapsible-header"><i class="material-icons">input</i>セットアップ</div>
+            <div class="collapsible-body">
+              <p>
+                .zipを解答すると3つのフォルダが中に入っています。css,font,jsです。詳細は<a href="http://materializecss.com/getting-started.html#setup">こちら</a>。cssとjsはそれぞれの中に入っているmaterialize.min.*さえあれば大丈夫です。</br>
+                </br>
+                その後（ファイルを適切な場所において、それに基づいて）htmlにリンクを書きましょう。</br>
+                <a href="https://gist.github.com/masayuki610930/3c6eb812c62dba2f61a6">こんな感じ</a>です！</br>
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div class="collapsible-header"><i class="material-icons">info</i>この部品について</div>
+            <div class="collapsible-body">
+              <p>
+                <a href="http://materializecss.com/collapsible.html">Collapsible</a>という名前です。</br>
+                </br>
+                この例ではulタグのclassに"<b>popout</b>"をつけていて、少し面白い動きをしてくれます。デフォルトで展開しておく際は、ulの子要素が&lt;div class="collapsible-header <b>active</b>"&gt;となります。</br>
+                </br>
+                なおCollapsibleを使う際は、JavaScriptで<a href="http://materializecss.com/collapsible.html#intialization">初期処理</a>を記載する必要があるので、ご注意を！</br>
+              </p>
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+
+
+
+    <!-- カードの説明 -->
+    <div class="row">
+      <div class="col s12 m5 offset-m1 l4 offset-l2">
+        <h3 id="card">カード</h3>
+        <div class="card">
+
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="http://materializecss.com/images/sample-1.jpg">
+            <span class="card-title">タイトル</span>
+          </div>
+
+          <div class="card-content">
+            <p>
+              マテリアルデザインでおなじみ、<a href="http://materializecss.com/cards.html">カード</a>がつくれ、このように画像をいれたり、リンク先を指定ができます。</br>
+              </br>
+              カードは&lt;div class="<b>card</b>"&gt;にて作れ、次の構造を取ります。
+<pre class="prettyprint lang-html">
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-image&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;card-content&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;card-action&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+              右（もしくは下）のカードはマウスオーバーで浮き上がるエフェクトがついてます。これは、hoverableを指定することで可能です。
+              <pre class="prettyprint lang-html">&lt;div class="card <b>hoverable</b>"&gt;</pre>
+            </p>
+          </div>
+
+          <div class="card-action center">
+            <a href="index.html#card">リンク</a>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col s12 m5 l4">
+        <h3 id="icon">アイコン</h3>
+        <div class="card hoverable">
+
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">アイコンを使う方法<i class="material-icons right">more_vert</i></span>
+            <p><a href="http://materializecss.com/icons.html">アイコン一覧</a></p>
+          </div>
+
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="src/img/icons.png">
+          </div>
+
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">アイコンについて<i class="material-icons right">close</i></span>
+            <p>
+              materializeではたくさんのアイコンを簡単に使えます。</br>
+              </br>
+              準備として、cssを読み込みましょう。</br>
+              <pre class="prettyprint lang-html">&lt;link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"&gt;</pre>
+              アイコンはタグiで書くことができます。</br>
+              </br>
+              <pre class="prettyprint lang-html">&lt;i class="material-icons"&gt;info_outline&lt;/i&gt;</pre>
+              </br>
+              iタグの中に<a href="http://materializecss.com/icons.html">アイコン一覧</a>の各アイコンの下にある文字列を指定すれば種類が変わります。</br>
+              上のiタグの例：<i class="material-icons">info_outline</i>
+            </p>	        </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ボタンの説明 -->
+    <div class="row">
+      <div class="col s12 m10 offset-m1 l8 offset-l2">
+        <h3 id="button">ボタン</h3>
+        <div class="card">
+          <div class="card-content">
+            <div>
+
+              <h5>種類</h5>
+                aタグやbuttonタグのclassにbtnをつけるだけです。お手軽！</br>
+                </br>
+              <a class="btn">ボタン</a>　標準のボタン</br>
+              <pre class="prettyprint lang-html">&lt;a class="<b>btn</b>"&gt;ボタン&lt;/a&gt;</pre>
+              </br>
+              <a class="btn"><i class="material-icons left">thumb_up</i>ボタン</a>　左アイコンのボタン</br>
+              <pre class="prettyprint lang-html">&lt;a class="btn"&gt;&lt;i class="material-icons <b>left</b>"&gt;thumb_up&lt;/i&gt;ボタン&lt;/a&gt;</pre>
+              </br>
+              <a class="btn"><i class="material-icons right">thumb_up</i>ボタン</a>　右アイコンのボタン</br>
+              <pre class="prettyprint lang-html">&lt;a class="btn"&gt;&lt;i class="material-icons <b>right</b>"&gt;thumb_up&lt;/i&gt;ボタン&lt;/a&gt;</pre>
+              </br>
+              <a class="btn-floating"><i class="material-icons">add</i></a>　floating ボタン</br>
+              <pre class="prettyprint lang-html">&lt;a class="<b>btn-floating</b>"&gt;&lt;i class="material-icons"&gt;add&lt;/i&gt;ボタン&lt;/a&gt;</pre>
+              </br>
+
+              <h5>エフェクト</h5>
+              マテリアルデザイン特有のエフェクトも付けれます！</br>
+              </br>
+              <a class="btn waves-effect ">ボタン</a>　waves-effect</br>
+              <pre class="prettyprint lang-html">&lt;a class="btn <b>waves-effect</b>"&gt;ボタン&lt;/a&gt;</br></pre>
+              </br>
+              <a class="btn waves-effect waves-light">ボタン</a>　waves-light</br>
+              <pre class="prettyprint lang-html">&lt;a class="btn waves-effect <b>waves-light</b>"&gt;ボタン&lt;/a&gt;</pre>
+              </br>
+
+              <h5>画面右下のボタン</h5>
+              ずっと画面の右下にいるボタンは、<a href="http://materializecss.com/buttons.html#floating">Fixed Action Button</a>と名前が付けられています。開く/閉じる効果をつけるためにはJavaScriptに追加する必要があります。
+              <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                <a class="btn-floating btn-large red">
+                  <i class="large material-icons">add</i>
+                </a>
+                <ul>
+                  <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></i></a></li>
+                  <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+                  <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                  <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- フォームの説明 -->
+    <div class="row">
+      <div class="col s12 m10 offset-m1 l8 offset-l2">
+        <h3 id="input-form">入力フォーム</h3>
+        <div class="card">
+          <div class="card-content">
+              Materializeを使えば入力フォームだって簡単です！</br>
+              </br>
+
+              <div class="row">
+                <form class="col s12">
+                  <h5 id="field">フィールド</h5>
+                  <pre class="prettyprint lang-html">
+&lt;div class=&quot;input-field&quot;&gt;
+  &lt;input id=&quot;hoge&quot; type=&quot;下の例のいずれかを指定&quot; class=&quot;validate&quot;&gt;
+  &lt;label for=&quot;hoge&quot;&gt;ラベルの文字列&lt;/label&gt;
+&lt;/div&gt;</pre>
+                  inputタグにclass="validate"を指定することで、typeにあわせた入力値のチェックが可能です。</br>
+                  </br>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input id="last_name" type="text" class="validate">
+                      <label for="last_name">type=&quot;text&quot;</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input placeholder="inputタグにplaceholder=&quot;文章&quot;でここの指定" id="first_name" type="text" class="validate">
+                      <label for="first_name">type=&quot;text&quot;</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12 m6">
+                      <input id="password" type="password" class="validate">
+                      <label for="password">type=&quot;password&quot;</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                      <input id="email" type="email" class="validate">
+                      <label for="email">type=&quot;email&quot;</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div class="row">
+                文字数チェックも入れることができます！が、一点だけご注意を！詳しくは<a href="http://masayuki610930.hatenablog.com/entry/2015/08/05/003248">こちら</a>
+                <div class="input-field col s12">
+                  <input id="input_text" type="text" length="40">
+                  <label for="input_text">$('div.input-field span:last-child').remove();が必要</label>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <form class="col s12">
+                  <h5 id="selectbox">セレクトボックス</h5>
+
+                  <pre class="prettyprint lang-html">
+&lt;div class=&quot;input-field&quot;&gt;
+  &lt;select&gt;
+    &lt;option value=&quot;&quot; disabled selected&gt;選んでください&lt;/option&gt;
+    &lt;option value=&quot;1&quot;&gt;選択肢1&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;選択肢2&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;選択肢3&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;label&gt;ラベルの文字列&lt;/label&gt;
+&lt;/div&gt;</pre>
+                  optionタグのdisabledで選択不可に、selectedでデフォルトの選択肢を決定できます。</br>
+                  </br>
+                  javascriptで初期化処理が必要です。</br>
+                  $('select').material_select();</br>
+                  </br>
+
+                  <div class="input-field col s6">
+                    <select>
+                      <option value="" disabled selected>選んでください</option>
+                      <option value="1">選択肢1</option>
+                      <option value="2">選択肢2</option>
+                      <option value="3">選択肢3</option>
+                    </select>
+                    <label>ラベルの文字列</label>
+                  </div>
+                </form>
+              </div>
+              <HR>
+
+
+              以下の入力フォーム詳細は<a href="http://materializecss.com/forms.html">公式サイト</a>を読んでください。こんなのもあるよ！という紹介だけします。</br>
+              </br>
+              <div class="row">
+                <div class="col s12 m4">
+                  <h5 id="radiobutton">ラジオボタン</h5>
+                  <div>
+                    <form action="#">
+                      <p>
+                        <input name="group1" type="radio" id="test1" />
+                        <label for="test1">選べる</label>
+                      </p>
+                      <p>
+                        <input name="group1" type="radio" id="test2" />
+                        <label for="test2">選べる</label>
+                      </p>
+                      <p>
+                        <input name="group1" type="radio" id="test4" disabled="disabled" />
+                        <label for="test4">選べない</label>
+                      </p>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="col s12 m4">
+                  <h5 id="checkbox">チェックボックス</h5>
+                  <div>
+                    <form action="#">
+                      <p>
+                        <input type="checkbox" id="test5" />
+                        <label for="test5">未選択</label>
+                      </p>
+                      <p>
+                        <input type="checkbox" id="test6" checked="checked" />
+                        <label for="test6">選択済み</label>
+                      </p>
+                      <p>
+                        <input type="checkbox" class="filled-in" id="filled-in-box"/>
+                        <label for="filled-in-box">エフェクト違い</label>
+                      </p>
+                      <p>
+                        <input type="checkbox" id="test7" disabled="disabled" />
+                        <label for="test7">選べない</label>
+                      </p>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="col s12 m4">
+                  <h5 id="range">レンジ</h5>
+                  <div>
+                    <form action="#">
+                      <div class="row">
+                        <div class="col s2 center">
+                          0
+                        </div>
+                        <div class="col s8">
+                          <p class="range-field">
+                            <input type="range" id="test5" min="0" max="100" />
+                          </p>
+                        </div>
+                        <div class="col s2 center">
+                          100
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col s12 m4">
+                  <h5 id="date">日付</h5>
+                  <div>
+                    <input type="date" class="datepicker">
+                  </div>
+                </div>
+
+                <div class="col s12 m4">
+                  <h5 id="switch">スイッチ</h5>
+                  <div class="switch">
+                    <label>
+                      Off
+                      <input type="checkbox">
+                      <span class="lever"></span>
+                      On
+                    </label>
+                  </div>
+                  </br>
+                  <div class="switch">
+                    <label>
+                      オフ
+                      <input disabled type="checkbox">
+                      <span class="lever"></span>
+                      オン
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col s12 m4">
+                  <h5 id="file-input">ファイル</h5>
+                  <div>
+                    <form action="#">
+                      <div class="file-field input-field">
+                        <div class="btn">
+                          <span>選択</span>
+                          <input type="file" />
+                        </div>
+
+                        <div class="col offset-s1">
+                          <input class="file-path validate" type="text"/>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 先頭へ飛ぶボタン -->
+    <div class="row">
+      <div class="col s2 offset-s5">
+        <div>
+          <a class="btn-floating btn-large" href="index.html#introduction"><i class="large material-icons">open_in_browser</i>ボタン</a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- footer -->
+    <div class="footer-copyright yellow darken-3">
+      <div class="container grey-text text-lighten-4">
+      © 2015 Copyright masayuki610930
+      <a class="grey-text text-lighten-4 right" href="https://github.com/masayuki610930/materialize_sample/tree/gh-pages">GitHub Link</a>
+      </div>
+    </div>
+
+
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="src/materialize/js/materialize.min.js"></script>
+
+    <!-- Import my script -->
+    <script type="text/javascript" src="src/myScript.js"></script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="../images/favicon.ico">
+    <title>管理画面:月詠 -TSUKUYOMI-</title>
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/encoding-japanese/1.0.30/encoding.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="websocket.js"></script>
+<script src="/js/setting.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo center"><img height="64px" src="../images/path79.png"></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/readme.html" class="nava">このサイトの利用方法</a></li>
+                </ul>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/update.html" class="nava">サイト更新情報</a></li>
+                </ul>
+                <ul id="slide-out" class="sidenav right">
+                    <li><a href="/">トップページ</a></li>
+                    <li class="active"><a href="/admin">管理者ページ</a></li>
+                    <li><a href="/about.html">このサイトについて</a></li>
+                    <li><a id="theme">ダークテーマにする(IE非対応)</a></li>
+                </ul>
+                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i
+                        class="material-icons">menu</i></a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <br />
+        <div class="row">
+            <div class="col s6 offset-s1">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="input-field col s3" id="sortitem">
+                            <select autocomplete="off">
+                                <option value="1">時間</option>
+                                <option value="2">社員番号</option>
+                            </select>
+                            <label>ソート順</label>
+                        </div>
+                        <div class="input-field col s3" id="sortorder">
+                            <select autocomplete="off">
+                                <option value="1">昇順</option>
+                                <option value="2">降順</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <table class="responsive-table centered col s12">
+                            <thead>
+                                <tr>
+                                    <th>時間</th>
+                                    <th>名前</th>
+                                    <th>社員番号</th>
+                                    <th>種別</th>
+                                    <th>点数</th>
+                                </tr>
+                            </thead>
+                            <tbody id="text">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card-panel col s4">
+                <div class="section">
+                    <h5>社員番号重複許可</h5>
+                    <p>
+                        <label>
+                            <input type="radio" class="filled-in left with-gap" id="unique" autocomplete="off" value="1"
+                                name="group1">
+                            <span class="optionlabel">社員番号の重複を許可しない</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="radio" class="filled-in left with-gap" id="itemunique" autocomplete="off"
+                                value="2" name="group1" />
+                            <span class="optionlabel">異なる種別の場合に社員番号の重複を許可する</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="radio" class="filled-in left with-gap" id="notunique" autocomplete="off"
+                                value="3" name="group1">
+                            <span class="optionlabel">社員番号の重複を許可する</span>
+                        </label>
+                    </p>
+                </div>
+                <div class="divider"></div>
+                <div class="section">
+                    <h5>受付種別</h5>
+                    <p>
+                        <label>
+                            <input type="checkbox" class="filled-in left" id="joinaccept" autocomplete="off">
+                            <span class="optionlabel">出勤を受付</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" class="filled-in left" id="leaveaccept" autocomplete="off">
+                            <span class="optionlabel">退勤を受付</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" class="filled-in left" id="otheraccept" autocomplete="off">
+                            <span class="optionlabel">その他を受付</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" class="filled-in left" id="scoreaccept" autocomplete="off">
+                            <span class="optionlabel">テストを受付</span>
+                        </label>
+                    </p>
+                    <div class="divider"></div>
+                </div>
+                <div class="center">
+                    <a class="btn waves-effect" id="reset" value="reset">リセット</a>
+                    <a class="btn waves-effect" id="sort" value="srot">ソート</a>
+                    <a class="btn waves-effect" id="download" value="down">取得</a>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer grey darken-2">
+        <div class="container center"></div>
+        <div class="footer-copyright grey darken-3">
+            <div class="container center">© 2020-2020 Glaz-egy, All right reserved.</div>
+        </div>
+    </footer>
+</body>
+
+</html>

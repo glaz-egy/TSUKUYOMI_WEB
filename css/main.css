@@ -1,0 +1,113 @@
+:root {
+    --sidenav-bg: #fff;
+    --main-text: #6a737d;
+    --main-bg: #fff;
+    --input-text: #000;
+    --card-bg: #fafafa;
+}
+
+:root[theme="dark"] {
+    --sidenav-bg: #424242;
+    --main-text: #ddd;
+    --main-bg: #000;
+    --input-text: rgb(247, 247, 247);
+    --card-bg: #424242;
+    --tab-col: #26a69a;
+}
+
+header {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+}
+
+nav {
+    height: 64px;
+}
+
+input {
+    color: var(--input-text);
+    background-color: var(--main-bg);
+}
+
+body {
+    color: var(--main-text);
+    background-color: var(--main-bg);
+}
+
+main {
+    margin: 8px 8px 8px 8px;
+}
+
+.sidenav{
+    color: var(--main-text);
+    background-color: var(--sidenav-bg);
+}
+
+.sidenav li > a{
+    color: var(--main-text);
+}
+
+.page-footer {
+    background-color: rgb(71, 71, 71);
+}
+
+.nav-wrapper {
+    height: 96px;
+    background-color: rgb(71, 71, 71);
+}
+
+html {
+    margin: 0;
+}
+
+header, main, footer {
+    padding-left: 0;
+}
+
+.inputarea {
+    width: 350px;
+    margin: auto;
+    padding: 10px;
+}
+
+.card-panel{
+    color: var(--main-text);
+    background-color: var(--card-bg);
+}
+
+.optionlabel{
+    color: var(--main-text);
+}
+
+.btn{
+    background-color: #34d058;
+    font-weight: 600;
+}
+
+.btn:hover{
+    background-color: #2db94e;
+}
+
+.tabs .indicator{
+    background-color: #26a69a;
+}
+
+li{
+    background-color: var(--card-bg);
+}
+
+.tab{
+    background-color: var(--card-bg);
+}
+
+.card-content{
+    background-color: var(--card-bg); 
+}
+
+.nava{
+    color: white;
+    background-color: rgb(71, 71, 71);
+}

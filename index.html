@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="images/favicon.ico">
+    <title>月詠 -TSUKUYOMI-</title>
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/encoding-japanese/1.0.30/encoding.min.js"></script>
+<script src="websocket.js"></script>
+<script src="js/setting.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+<body>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo center"><img height="64px" src="images/path79.png"></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="readme.html" class="nava">このサイトの利用方法</a></li>
+                </ul>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="update.html" class="nava">サイト更新情報</a></li>
+                </ul>
+                <ul id="slide-out" class="sidenav right">
+                    <li class="active"><a href="/">トップページ</a></li>
+                    <li><a href="/admin">管理者ページ</a></li>
+                    <li><a href="/about.html">このサイトについて</a></li>
+                    <li><a id="theme">ダークテーマにする(IE非対応)</a></li>
+                </ul>
+                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i
+                        class="material-icons">menu</i></a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <br />
+        <div class="row">
+            <div class="col s4 offset-s4">
+                <div class="card-panel">
+                    <label id="server_status"></label><br />
+                    <label id="admin_status">管理者はログインしていません</label>
+                    <div class="input-field">
+                        <input type="text" id="name">
+                        <label for="name" id="namel">氏名</label>
+                        <span class="helper-text red-text" id="alert_name"></span>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" id="number">
+                        <label for="number" id="numberl">社員番号</label>
+                        <span class="helper-text red-text" id="alert_number"></span>
+                    </div>
+                    <div class="input-field">
+                        <input type="number" class="validate" id="score" min="0" max="100">
+                        <label for="score">点数</label>
+                        <span class="helper-text" data-error="点数の範囲が異常です" data-success="OK" id="alert_score"></span>
+                    </div>
+                    <p>
+                        <label>
+                            <input type="checkbox" class="filled-in left" id="savedata" autocomplete="off">
+                            <span class="optionlabel">氏名、社員番号をブラウザに保存する</span>
+                        </label>
+                    </p>
+                    <label id="call"></label><br/>
+                    <label id="data"></label>
+                    <br />
+                    <div class="divider"></div>
+                    <br />
+                    <div class='center'>
+                        <a class="btn waves-effect" id="join" value="出勤">出勤</a>
+                        <a class="btn waves-effect" id="leave" value="退勤">退勤</a>
+                        <a class="btn waves-effect" id="other" value="その他">その他</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="page-footer">
+        <div class="container center"></div>
+        <div class="footer-copyright" style="background-color: rgb(53, 53, 53);">
+            <div class="container center">© 2020-2020 Glaz-egy, All right reserved.</div>
+        </div>
+    </footer>
+</body>
+
+</html>
