@@ -2,6 +2,7 @@
 <head>
     <link rel="icon" href="images/favicon.ico">
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
     <title>月詠 -TSUKUYOMI-</title>
 </head>
 
@@ -22,21 +23,28 @@
 <bod>
     <header>
         <nav>
+            <ul id="dropdown1" class="dropdown-content nava">
+                <li><a href="/admin" class="nava" style="color: white;">管理者ページ</a></li>
+                <li><a href="/readme.html" class="nava" style="color: white;">このサイトの利用方法</a></li>
+                <li><a href="/about.html" class="nava" style="color: white;">このサイトについて</a></li>
+            </ul>
             <div class="nav-wrapper">
-                <a href="/" class="brand-logo center"><img height="64px" src="images/path79.png"></a>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="/readme.html" class="nava">このサイトの利用方法</a></li>
-                </ul>
-                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <a href="/" class="brand-logo center"><img height="64px" src="../images/path79.png"></a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+                <ul class="right hide-on-med-and-down">
                     <li><a href="/update.html" class="nava">サイト更新情報</a></li>
+                    <li><a id="theme" class="nava">ダークテーマにする(IE非対応)</a></li>
+                    <li><a class="dropdown-trigger nava" href="#!" data-target="dropdown1">その他　　<i class="material-icons right">arrow_drop_down</i></a></li>
                 </ul>
-                <ul id="slide-out" class="sidenav right">
+                <ul class="sidenav" id="mobile-demo">
                     <li><a href="/">トップページ</a></li>
                     <li><a href="/admin">管理者ページ</a></li>
-                    <li class="active"><a href="#!">このサイトについて</a></li>
-                    <li><a id="theme">ダークテーマにする(IE非対応)</a></li>
+                    <li><a href="/update.html">サイト更新情報</a></li>
+                    <li><a href="/readme.html">このサイトの利用方法</a></li>
+                    <li class="active"><a href="/about.html">このサイトについて</a></li>
+                    <li><a id="theme2">ダークテーマにする(IE非対応)</a></li>
                 </ul>
-                <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
             </div>
         </nav>
     </header>

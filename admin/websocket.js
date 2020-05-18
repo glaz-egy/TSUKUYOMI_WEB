@@ -166,6 +166,7 @@ function isAccept(type, number, userNumber, userNumberType){
             'scoreonly':'#scoreonly',
             'uniquesetting':'#uniquesetting',
             'uniquenumber':'#uniquenumber',
+            'getdata' : '#getdata',
         }, options);
         $(settings['reset']).click(methods['reset']);
         $(settings['sort']).click(methods['sort']);
@@ -173,6 +174,7 @@ function isAccept(type, number, userNumber, userNumberType){
         $(settings['admintime']).click(methods['times']);
         $(settings['scoreonly']).click(methods['scoreonly']);
         $(settings['uniquesetting']).click(methods['uniquesetting']);
+        $(settings['getdata']).click(methods['getdata']);
         $(this).content('connect');
     },
     
@@ -187,6 +189,7 @@ function isAccept(type, number, userNumber, userNumberType){
     reset : function (){
         $("[id='text']").text('');
         text = '';
+        textList.splice(0);
         userList.splice(0);
         userNumberType.splice(0);
     },
@@ -224,6 +227,19 @@ function isAccept(type, number, userNumber, userNumberType){
         console.log(text);
     },
 
+    getdata : function(event){
+        var minute = $('#minute').val();
+        var isError = false;
+        $("[id='alert_minute']").text('');
+        console.log(minute);
+        if(!minute){
+            $("[id='alert_minute']").text('社員番号が入っていません');
+            isError = true;
+        }
+        if(isError) return;
+        settings['conn'].send('{"name": "admin", "type": "admin_all_get", "minute": "'+minute+'"}');
+    },
+
     onMessage : function (event) {
         if (event && event.data) {
             $(this).content('drawText',event.data);
@@ -236,45 +252,48 @@ function isAccept(type, number, userNumber, userNumberType){
     },
     
     drawText : function (message) {
-        var obj = $.parseJSON(message);
+        var objs = $.parseJSON(message);
         var linkTag = document.getElementById('download');
         var date;
-        if(obj['date']){
-            date = obj['date'];
-        }else{
-            var now = new Date();
-            var date = now.getFullYear()+'/'+$(this).content('zeroPadding',now.getMonth(), 2)+
-                        '/'+$(this).content('zeroPadding',now.getDate(), 2)+' '+$(this).content('zeroPadding',now.getHours(), 2)+
-                        ':'+$(this).content('zeroPadding',now.getMinutes(), 2)+':'+$(this).content('zeroPadding',now.getSeconds(), 2);
+        for(d in objs){
+            var obj = objs[d];
+            if(obj['date']){
+                date = obj['date'];
+            }else{
+                var now = new Date();
+                var date = now.getFullYear()+'/'+$(this).content('zeroPadding',now.getMonth(), 2)+
+                            '/'+$(this).content('zeroPadding',now.getDate(), 2)+' '+$(this).content('zeroPadding',now.getHours(), 2)+
+                            ':'+$(this).content('zeroPadding',now.getMinutes(), 2)+':'+$(this).content('zeroPadding',now.getSeconds(), 2);
+            }
+            console.log(message);
+            console.log(Encoding.detect(obj['name']));
+            var encName = Encoding.convert(obj['name'], {to: 'UNICODE', from: 'AUTO', type: 'string'});
+            if(obj['type'] == 'join' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
+                $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>出勤</td></tr>');
+                text += '['+date+']'+encName+', '+obj['number']+', 出勤\r\n';
+                textList.push({number:obj['number'],　time: date , text:'['+date+']'+encName+', '+obj['number']+', 出勤'});
+                userList.push(obj['number']);
+                userNumberType.push(obj['number']+obj['type']);
+            }else if(obj['type'] == 'leave' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
+                $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>退勤</td></tr>');
+                text += '['+date+']'+encName+', '+obj['number']+', 退勤\r\n';
+                textList.push({number:obj['number'],　time: date, text:'['+date+']'+encName+', '+obj['number']+', 退勤'});
+                userList.push(obj['number']);
+                userNumberType.push(obj['number']+obj['type']);
+            }else if(obj['type'] == 'other' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
+                $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>その他</td></tr>');
+                text += '['+date+']'+encName+', '+obj['number']+', その他\r\n';
+                textList.push({number:obj['number'],　time: date, text:'['+date+']'+encName+', '+obj['number']+', その他'});
+                userList.push(obj['number']);
+                userNumberType.push(obj['number']+obj['type']);
+            }else if(obj['type'] == 'score' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
+                $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>テスト</td><td>'+obj['score']+'</td></tr>');
+                text += '['+date+']'+encName+', '+obj['number']+', テスト, '+obj['score']+'\r\n';
+                textList.push({number:obj['number'],　time: date, text: '['+date+']'+encName+', '+obj['number']+', テスト, '+obj['score']});
+                userList.push(obj['number']);
+                userNumberType.push(obj['number']+obj['type']);
+            }
         }
-        console.log(message);
-        console.log(Encoding.detect(obj['name']));
-        var encName = Encoding.convert(obj['name'], {to: 'UNICODE', from: 'AUTO', type: 'string'});
-        if(obj['type'] == 'join' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
-            $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>出勤</td></tr>');
-            text += '['+date+']'+encName+', '+obj['number']+', 出勤\r\n';
-            textList.push({number:obj['number'],　time: date , text:'['+date+']'+encName+', '+obj['number']+', 出勤'});
-            userList.push(obj['number']);
-            userNumberType.push(obj['number']+obj['type']);
-        }else if(obj['type'] == 'leave' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
-            $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>退勤</td></tr>');
-            text += '['+date+']'+encName+', '+obj['number']+', 退勤\r\n';
-            textList.push({number:obj['number'],　time: date, text:'['+date+']'+encName+', '+obj['number']+', 退勤'});
-            userList.push(obj['number']);
-            userNumberType.push(obj['number']+obj['type']);
-        }else if(obj['type'] == 'other' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
-            $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>その他</td></tr>');
-            text += '['+date+']'+encName+', '+obj['number']+', その他\r\n';
-            textList.push({number:obj['number'],　time: date, text:'['+date+']'+encName+', '+obj['number']+', その他'});
-            userList.push(obj['number']);
-            userNumberType.push(obj['number']+obj['type']);
-        }else if(obj['type'] == 'score' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
-            $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>テスト</td><td>'+obj['score']+'</td></tr>');
-            text += '['+date+']'+encName+', '+obj['number']+', テスト, '+obj['score']+'\r\n';
-            textList.push({number:obj['number'],　time: date, text: '['+date+']'+encName+', '+obj['number']+', テスト, '+obj['score']});
-            userList.push(obj['number']);
-            userNumberType.push(obj['number']+obj['type']);
-	    }
         var blob = new Blob([text], {type:"text/plan"});
         console.log(text);
         linkTag.setAttribute('href', URL.createObjectURL(blob));

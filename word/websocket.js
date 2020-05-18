@@ -64,76 +64,17 @@ function saveDataCheck(){
         var number = $(settings['number']).val();
         var isError = false;
         $("[id='alert_name']").text('');
-        $("[id='alert_number']").text('');
         if(!name){
             $("[id='alert_name']").text('氏名が入っていません');
             isError = true;
         }
-        if(!number){
-            $("[id='alert_number']").text('社員番号が入っていません');
-            isError = true;
-        }
         if(isError) return;
-        date = $(this).content('getDateTime');
-        settings['conn'].send('{"name": "'+name+'", "number": "'+number+'", "type": "join", "date": "'+date+'"}');
-        $('#data').text('送信データ:{"name": "'+name+'", "number": "'+number+'", "type": "join", "date": "'+date+'"}');
-        if(isSaveDataCheck) saveData(name, number);
+        settings['conn'].send('{"name": "'+name+'", "type": "wolf"}');
     },
-
-    leave : function ( event ) {
-        var name = $(settings['name']).val();
-        var number = $(settings['number']).val();
-        var isError = false;
-        $("[id='alert_name']").text('');
-        $("[id='alert_number']").text('');
-        if(!name){
-            $("[id='alert_name']").text('氏名が入っていません');
-            isError = true;
-        }
-        if(!number){
-            $("[id='alert_number']").text('社員番号が入っていません');
-            isError = true;
-        }
-        if(isError) return;
-        date = $(this).content('getDateTime');
-        settings['conn'].send('{"name": "'+name+'", "number": "'+number+'", "type": "leave", "date": "'+date+'"}');
-        $('#data').text('送信データ:{"name": "'+name+'", "number": "'+number+'", "type": "leave", "date": "'+date+'"}');
-        if(isSaveDataCheck) saveData(name, number);
-    },
-
-    other : function ( event ) {
-        var name = $(settings['name']).val();
-        var number = $(settings['number']).val();
-        var score = $(settings['score']).val();
-        var isError = false;
-        $("[id='alert_name']").text('');
-        $("[id='alert_number']").text('');
-        if(!name){
-            $("[id='alert_name']").text('氏名が入っていません');
-            isError = true;
-        }
-        if(!number){
-            $("[id='alert_number']").text('社員番号が入っていません');
-            isError = true;
-        }
-        if(isError) return;
-        if (settings['conn'] && score) {
-            if(0 <= Number(score) && Number(score) <= 100){
-                date = $(this).content('getDateTime');
-                settings['conn'].send('{"name": "'+name+'", "number": "'+number+'", "score": "'+score+'", "type": "score", "date": "'+date+'"}');
-                $('#data').text('送信データ:{"name": "'+name+'", "number": "'+number+'", "score": "'+score+'", "type": "score", "date": "'+date+'"}');
-                if(isSaveDataCheck) saveData(name, number);
-            }
-        }else{
-            settings['conn'].send('{"name": "'+name+'", "number": "'+number+'", "type": "other", "date": "'+date+'"}');
-            $('#data').text('送信データ:{"name": "'+name+'", "number": "'+number+'", "type": "other", "date": "'+date+'"}');
-            if(isSaveDataCheck) saveData(name, number);
-        }
-	},
     
     connect : function () {
         if (settings['conn'] == null) {
-            settings['conn'] = new WebSocket('ws://www.tsukuyomi.work:8081?user');
+            settings['conn'] = new WebSocket('ws://www.tsukuyomi.work:8081?login');
             settings['conn'].onopen = methods['onOpen'];
             settings['conn'].onmessage = methods['onMessage'];
             settings['conn'].onclose = methods['onClose'];
@@ -177,17 +118,11 @@ function saveDataCheck(){
     
     drawText : function (message) {
         var obj = $.parseJSON(message);
-        if(obj['cmd'] == 'login_admin'){
-            $("[id='admin_status']").text('管理者がログインしています');
-            $("[id='admin_status_icon']").text('check');
-            $("[id='admin_status_icon']").css('color', 'green');
-            if(Object.keys(query).length == 3){
-                $(this).content('paramGETLogin', obj);
-            }
-        }else if(obj['cmd'] == 'logout_admin'){
-            $("[id='admin_status']").text('管理者はログインしていません');
-            $("[id='admin_status_icon']").text('close');
-            $("[id='admin_status_icon']").css('color', 'red');
+        console.log(obj);
+        if(obj['type'] == 'join'){
+            $("[id='userlist']").append('<p><label><input class="with-gap" name="group1" type="radio"/><span>'+obj["name"]+'</span></label></p>');
+        }else if(obj['type'] == 'start'){
+            $("[id='data']").text('あなたのお題は'+obj['job']+'です');
         }
     },
 
@@ -219,8 +154,7 @@ function saveDataCheck(){
 
     getDateTime : function(){
         var now = new Date();
-        console.log(now.getMonth()+1);
-        return now.getFullYear()+'-'+$(this).content('zeroPadding',now.getMonth()+1, 2)+
+        return now.getFullYear()+'-'+$(this).content('zeroPadding',now.getMonth(), 2)+
                 '-'+$(this).content('zeroPadding',now.getDate(), 2)+' '+$(this).content('zeroPadding',now.getHours(), 2)+
                 ':'+$(this).content('zeroPadding',now.getMinutes(), 2)+':'+$(this).content('zeroPadding',now.getSeconds(), 2);
     },

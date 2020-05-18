@@ -10,11 +10,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/encoding-japanese/1.0.30/encoding.min.js"></script>
 <script src="websocket.js"></script>
-<script src="js/setting.js"></script>
+<script src="/js/setting.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="/css/main.css">
 
 <body>
     <header>
@@ -47,45 +47,22 @@
     <div class="container">
         <br />
         <div class="row">
-            <div class="col s12 l6 offset-l3">
+            <div class="col s12 l6 offset-l3" id="input_area">
                 <div class="card-panel">
-                    <div class="section">
-                        <h5>接続状態</h5>
-                        <i class="material-icons" style="color: red" id="server_status_icon">close</i><label class="gray" style="vertical-align: top; font-size: 1.1em;" id="server_status">接続していません</label><br />
-                        <i class="material-icons" style="color: red" id="admin_status_icon">close</i><label class="gray" style="vertical-align: top; font-size: 1.1em;" id="admin_status">管理者はログインしていません</label>
-                    </div>
-                    <label id="call"></label><br/>
-                    <label id="data"></label>
-                    <!--<div class="section">
-                        <h5>管理者受信種別</h5>
-                        <div class="row">
-                            <i class="material-icons" style="color: red" id="acceptjoin">close</i><label style="vertical-align: top; font-size: 1.1em;">出勤</label>
-                            <i class="material-icons" style="color: red" id="acceptleave">close</i><label style="vertical-align: top; font-size: 1.1em;">退勤</label>
-                            <i class="material-icons" style="color: red" id="acceptother">close</i><label style="vertical-align: top; font-size: 1.1em;">その他</label>
-                            <i class="material-icons" style="color: red" id="acceptscore">close</i><label style="vertical-align: top; font-size: 1.1em;">テスト</label>
-                        </div>
-                    </div>-->
-                </div>
-                <div class="card-panel" id="input-area">
-                    <div class="input-field">
-                        <input type="text" id="name">
-                        <label for="name" id="namel">氏名</label>
-                        <span class="helper-text red-text" id="alert_name"></span>
-                    </div>
                     <div class="input-field">
                         <input type="text" id="number">
                         <label for="number" id="numberl">社員番号</label>
                         <span class="helper-text red-text" id="alert_number"></span>
                     </div>
-                    <div class="input-field">
-                        <input type="number" class="validate" id="score" min="0" max="100">
-                        <label for="score">点数</label>
-                        <span class="helper-text" data-error="点数の範囲が異常です" data-success="OK" id="alert_score"></span>
+                    <div class="input-field" hidden>
+                        <input type="password" id="pass">
+                        <label for="password" id="numberl">パスワード</label>
+                        <span class="helper-text red-text" id="alert_pass"></span>
                     </div>
                     <p>
-                        <label>
+                        <label hidden>
                             <input type="checkbox" class="filled-in left" id="savedata" autocomplete="off">
-                            <span class="optionlabel">氏名、社員番号をブラウザに保存する</span>
+                            <span class="optionlabel">社員番号、パスワードをブラウザに保存する</span>
                         </label>
                     </p>
                     <br />
@@ -93,9 +70,26 @@
                     <div class="divider"></div>
                     <br />
                     <div class='center'>
-                        <a class="btn waves-effect" id="join" value="出勤">出勤</a>
-                        <a class="btn waves-effect" id="leave" value="退勤">退勤</a>
-                        <a class="btn waves-effect" id="other" value="その他">その他</a>
+                        <a class="btn waves-effect" id="login" value="出勤">ログイン</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 l12" id="data_area" hidden>
+                <div class="card-panel">
+                    <div class="row">
+                        <table class="responsive-table centered col s12">
+                            <thead>
+                                <tr>
+                                    <th>時間</th>
+                                    <th>名前</th>
+                                    <th>社員番号</th>
+                                    <th>種別</th>
+                                    <th>点数</th>
+                                </tr>
+                            </thead>
+                            <tbody id="text">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

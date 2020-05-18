@@ -31,12 +31,13 @@ function changeLightMode() {
     console.log("Light");
     isDarkTheme = false;
     document.getElementById("theme").text = "ダークテーマにする(IE非対応)";
+    document.getElementById("theme2").text = "ダークテーマにする(IE非対応)";
 }
 function changeDarkMode() {
     document.documentElement.setAttribute('theme', 'dark');
     isDarkTheme = true;
     document.getElementById("theme").text = "ライトテーマにする(IE非対応)";
-    console.log("Dark");
+    document.getElementById("theme2").text = "ライトテーマにする(IE非対応)";
 }
 
 $(function() {
@@ -48,6 +49,21 @@ $(function() {
         } else {
             changeDarkMode();
             $('#theme').text("ライトテーマにする(IE非対応)");
+            setThemeSetting('dark');
+        }
+    })
+    $('#theme2').click(function(){
+        if(isDarkTheme){
+            changeLightMode();
+            $('#theme').text("ダークテーマにする(IE非対応)");
+            setThemeSetting('light');
+            $('#theme2').text("ダークテーマにする(IE非対応)");
+            setThemeSetting('light');
+        } else {
+            changeDarkMode();
+            $('#theme').text("ライトテーマにする(IE非対応)");
+            setThemeSetting('dark');
+            $('#theme2').text("ライトテーマにする(IE非対応)");
             setThemeSetting('dark');
         }
     })
