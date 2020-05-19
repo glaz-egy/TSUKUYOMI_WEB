@@ -3,10 +3,12 @@ $(document).ready(function(){
 });
 
 var unique;
+var timeSetting;
 var isAcceptJoin = true;
 var isAcceptLeave = true;
 var isAcceptOther = true;
 var isAcceptScore = true;
+var isAdminTime = false;
 
 document.addEventListener('DOMContentLoaded', function() {
     unique = window.localStorage.getItem('unique-setting');
@@ -24,6 +26,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }else{
         unique = "1";
         document.getElementById("unique").setAttribute('checked', '');
+    }
+    timeSetting = window.localStorage.getItem('time-setting');
+    if(timeSetting != null){
+        switch (timeSetting){
+                case "1": document.getElementById("usertime").setAttribute('checked', '');
+                    break;
+                case "2": document.getElementById("admintime").setAttribute('checked', '');
+                    break;
+                default:
+                    break;
+        }
+    }else{
+	    timeSetting = "1";
+	    document.getElementById("usertime").setAttribute('checked', '');
     }
     console.log(document.getElementById("scoreaccept").getAttribute("checked"));
     tmp = window.localStorage.getItem('isAcceptJoin');
@@ -69,6 +85,14 @@ $(function() {
         window.localStorage.setItem('unique-setting', "3");
         unique = "3";
     });
+    $('#usertime').click(function(){
+        window.localStorage.setItem('time-setting', "1");
+        timeSetting = "1";
+    });
+    $('#admintime').click(function(){
+        window.localStorage.setItem('time-setting', "2");
+        timeSetting = "2";
+    });
     $('#joinaccept').click(function(){
         if(isAcceptJoin){
             window.localStorage.setItem('isAcceptJoin', "false");
@@ -82,6 +106,22 @@ $(function() {
         if(isAcceptLeave){
             window.localStorage.setItem('isAcceptLeave', "false");
             isAcceptLeave = false;
+        }else{
+            window.localStorage.setItem('isAcceptLeave', "true");
+            isAcceptLeave = true;
+        }
+    });
+    $('#otheraccept').click(function(){
+        if(isAcceptOther){
+            window.localStorage.setItem('isAcceptOther', "false");
+            isAcceptOther = false;
+        }else{
+            window.localStorage.setItem('isAcceptOther', "true");
+            isAcceptOther = true;
+        }
+    });
+    $('#scoreaccept').click(function(){
+        if(isAcceptScore){
         }else{
             window.localStorage.setItem('isAcceptLeave', "true");
             isAcceptLeave = true;
@@ -180,7 +220,7 @@ function isAccept(type, number, userNumber, userNumberType){
     
     connect : function () {
         if (settings['conn'] == null) {
-            settings['conn'] = new WebSocket('ws://www.tsukuyomi.work:8081?admin');
+            settings['conn'] = new WebSocket('wss://www.tsukuyomi.work/wss/?admin');
             settings['conn'].onmessage = methods['onMessage'];
             settings['conn'].onclose = methods['onClose'];
         }
@@ -233,7 +273,7 @@ function isAccept(type, number, userNumber, userNumberType){
         $("[id='alert_minute']").text('');
         console.log(minute);
         if(!minute){
-            $("[id='alert_minute']").text('社員番号が入っていません');
+            $("[id='alert_minute']").text('時間が入力されていません');
             isError = true;
         }
         if(isError) return;
@@ -249,6 +289,7 @@ function isAccept(type, number, userNumber, userNumberType){
     onClose : function(event) {
         settings['conn'] = null;
         setTimeout(methods['connect'], 1000);
+        window.alert('サーバと接続が切断されました');
     },
     
     drawText : function (message) {
@@ -257,7 +298,7 @@ function isAccept(type, number, userNumber, userNumberType){
         var date;
         for(d in objs){
             var obj = objs[d];
-            if(obj['date']){
+            if(obj['date'] && timeSetting == "1"){
                 date = obj['date'];
             }else{
                 var now = new Date();
@@ -281,15 +322,15 @@ function isAccept(type, number, userNumber, userNumberType){
                 userList.push(obj['number']);
                 userNumberType.push(obj['number']+obj['type']);
             }else if(obj['type'] == 'other' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
-                $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>その他</td></tr>');
-                text += '['+date+']'+encName+', '+obj['number']+', その他\r\n';
-                textList.push({number:obj['number'],　time: date, text:'['+date+']'+encName+', '+obj['number']+', その他'});
+                $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>そ�?��?</td></tr>');
+                text += '['+date+']'+encName+', '+obj['number']+', そ�?�他\r\n';
+                textList.push({number:obj['number'],　time: date, text:'['+date+']'+encName+', '+obj['number']+', そ�?��?'});
                 userList.push(obj['number']);
                 userNumberType.push(obj['number']+obj['type']);
             }else if(obj['type'] == 'score' && isAccept(obj['type'], obj['number'], userList, userNumberType)){
-                $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>テスト</td><td>'+obj['score']+'</td></tr>');
-                text += '['+date+']'+encName+', '+obj['number']+', テスト, '+obj['score']+'\r\n';
-                textList.push({number:obj['number'],　time: date, text: '['+date+']'+encName+', '+obj['number']+', テスト, '+obj['score']});
+                $("[id='text']").append('<tr><td>'+date+'</td><td>'+encName+'</td><td>'+obj['number']+'</td><td>�?ス�?</td><td>'+obj['score']+'</td></tr>');
+                text += '['+date+']'+encName+', '+obj['number']+', �?ス�?, '+obj['score']+'\r\n';
+                textList.push({number:obj['number'],　time: date, text: '['+date+']'+encName+', '+obj['number']+', �?ス�?, '+obj['score']});
                 userList.push(obj['number']);
                 userNumberType.push(obj['number']+obj['type']);
             }
