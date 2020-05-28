@@ -74,7 +74,7 @@ function saveDataCheck(){
     
     connect : function () {
         if (settings['conn'] == null) {
-            settings['conn'] = new WebSocket('ws://www.tsukuyomi.work:8081?login');
+            settings['conn'] = new WebSocket('ws://92.202.219.218:8081?login');
             settings['conn'].onopen = methods['onOpen'];
             settings['conn'].onmessage = methods['onMessage'];
             settings['conn'].onclose = methods['onClose'];

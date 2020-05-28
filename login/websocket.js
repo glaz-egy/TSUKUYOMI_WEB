@@ -65,21 +65,19 @@ function saveDataCheck(){
         var number = $(settings['number']).val();
         var pass = $(settings['pass']).val();
         var isError = false;
-        $("[id='alert_pass']").text('');
         $("[id='alert_number']").text('');
-        if(!pass){
-            $("[id='alert_pass']").text('パスワードが入っていません');
-            //isError = true;
-        }
+        $("[id='alert_pass']").text('');
         if(!number){
             $("[id='alert_number']").text('社員番号が入っていません');
             isError = true;
         }
+        if(!pass){
+            $("[id='alert_pass']").text('パスワードが入っていません');
+            isError = true;
+        }
         if(isError) return;
-        $('#input_area').fadeOut(1000);
-        console.log($('intpu_area'));
-        $('#data_area').delay(1000).fadeIn(1000);
-        settings['conn'].send('{"name": "admin", "type": "user_get", "number": "'+number+'"}');
+        
+        settings['conn'].send('{"name": "user", "type": "user_get", "number": "'+number+'", "pass": "'+pass+'"}');
     },
     
     connect : function () {
@@ -128,6 +126,13 @@ function saveDataCheck(){
     
     drawText : function (message) {
         var objs = $.parseJSON(message);
+        if(objs['cmd'] == 'denial'){
+            $('#call').text('社員番号、またはパスワードが違います');
+            return;
+        }
+        $('#input_area').fadeOut(1000);
+        $('#data_area').delay(1000).fadeIn(1000);
+        delete objs['cmd'];
         for(d in objs){
             var obj = objs[d];
             date = obj['date'];
